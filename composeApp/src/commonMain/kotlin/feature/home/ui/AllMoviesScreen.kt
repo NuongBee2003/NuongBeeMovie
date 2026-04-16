@@ -1,18 +1,20 @@
 package feature.home.ui
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,10 +31,13 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import core.ui.theme.AppColors
 import feature.home.presentation.HomeScreenModel
-import feature.home.ui.components.HomeHeroCard
 import feature.home.ui.components.MoviePosterCard
 
-class HomeScreen : Screen {
+/**
+ * Screen hiển thị toàn bộ danh sách phim (tạm thời reuse HomeScreenModel).
+ * Chưa làm view detail.
+ */
+class AllMoviesScreen : Screen {
     @Composable
     override fun Content() {
         val screenModel = rememberScreenModel { HomeScreenModel() }
@@ -67,74 +72,44 @@ class HomeScreen : Screen {
                 }
 
                 else -> {
-                    val hero = state.movies.firstOrNull()
-                    val previewMovies = state.movies.drop(1).take(10) // 10 items = 5 dòng (2 cột)
-
                     LazyColumn(
                         modifier = Modifier.fillMaxSize(),
                         contentPadding = PaddingValues(
                             start = 16.dp,
                             end = 16.dp,
-                            top = 0.dp,
+                            top = 12.dp,
                             bottom = 110.dp,
                         ),
                         verticalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
-                        if (hero != null) {
-                            item(key = "hero") {
-                                // Full-width look: remove side padding just for hero
-                                Box(modifier = Modifier.padding(horizontal = 0.dp)) {
-                                    HomeHeroCard(
-                                        movie = hero,
-                                        modifier = Modifier
-                                            .fillMaxSize()
-                                    )
-                                }
-                            }
-                        }
-
-                        // Header like screenshot + action "Xem Tất Cả"
-                        item(key = "section-title") {
+                        item(key = "title") {
                             Row(
-                                modifier = Modifier
-                                    .fillMaxSize(),
                                 verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.SpaceBetween,
+                                horizontalArrangement = Arrangement.spacedBy(10.dp),
                             ) {
-                                Column {
-                                    Text(
-                                        text = "Phim Mới",
-                                        color = AppColors.TextPrimary,
-                                        fontSize = 20.sp,
-                                        fontWeight = FontWeight.Bold,
-                                    )
-                                    Text(
-                                        text = "Cập nhật những siêu phẩm mới\nnhất tuần này",
-                                        color = AppColors.TextSecondary,
-                                        style = MaterialTheme.typography.bodySmall,
-                                    )
-                                }
-
-                                Text(
+                                Icon(
+                                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                    contentDescription = "Back",
+                                    tint = AppColors.TextPrimary,
                                     modifier = Modifier
-                                        .padding(start = 16.dp)
-                                        .clickable { navigator?.push(AllMoviesScreen()) },
-                                    text = "Xem\nTất Cả  >",
-                                    color = AppColors.TextSecondary,
-                                    fontSize = 13.sp,
-                                    fontWeight = FontWeight.SemiBold,
+                                        .clickable { navigator?.pop() }
+                                        .padding(6.dp)
+                                )
+                                Text(
+                                    text = "Xem Tất Cả",
+                                    color = AppColors.TextPrimary,
+                                    fontSize = 20.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    style = MaterialTheme.typography.titleLarge,
                                 )
                             }
                         }
 
-                        // 2-column preview list (10 items)
                         items(
-                            items = previewMovies.chunked(2),
+                            items = state.movies.chunked(2),
                             key = { pair -> pair.joinToString("-") { it.id } },
                         ) { pair ->
-                            Row(
-                                horizontalArrangement = Arrangement.spacedBy(14.dp),
-                            ) {
+                            Row(horizontalArrangement = Arrangement.spacedBy(14.dp)) {
                                 MoviePosterCard(movie = pair[0], modifier = Modifier.weight(1f))
                                 if (pair.size > 1) {
                                     MoviePosterCard(movie = pair[1], modifier = Modifier.weight(1f))
@@ -149,5 +124,11 @@ class HomeScreen : Screen {
         }
     }
 }
+
+
+
+
+
+
 
 

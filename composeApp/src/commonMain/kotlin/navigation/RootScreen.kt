@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
@@ -16,14 +17,22 @@ import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.CurrentScreen
 import cafe.adriel.voyager.navigator.Navigator
+import core.ui.components.AppTopBar
 import core.ui.theme.AppColors
 
-/** Root screen hosting bottom navigation for 4 pages */
 class RootScreen : Screen {
     @Composable
     override fun Content() {
         Navigator(BottomNavItem.Home.screen) { navigator ->
             Scaffold(
+                topBar = {
+                    val title = "BEE MOVIE".uppercase()
+
+                    AppTopBar(
+                        title = title,
+                        onMenuClick = { /* TODO: open drawer */ },
+                    )
+                },
                 bottomBar = {
                     Box(
                         modifier = Modifier
@@ -43,7 +52,12 @@ class RootScreen : Screen {
                                     onClick = {
                                         if (!selected) navigator.replace(item.screen)
                                     },
-                                    icon = {},
+                                    icon = {
+                                        Icon(
+                                            imageVector = item.icon,
+                                            contentDescription = item.title
+                                        )
+                                    },
                                     label = { Text(item.title) },
                                     colors = NavigationBarItemDefaults.colors(
                                         selectedIconColor = AppColors.IconSelected,

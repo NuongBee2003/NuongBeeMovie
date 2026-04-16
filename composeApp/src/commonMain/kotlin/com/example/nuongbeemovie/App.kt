@@ -12,7 +12,6 @@ import navigation.RootScreen
 fun App() {
     NuongBeeTheme {
         AppSurface {
-            // RootScreen hosts bottom navigation (Home/Category/Search/Profile)
             Navigator(RootScreen())
         }
     }

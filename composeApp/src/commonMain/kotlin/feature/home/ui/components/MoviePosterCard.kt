@@ -1,6 +1,7 @@
 package feature.home.ui.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -34,8 +35,11 @@ import feature.home.domain.model.HomeMovie
 fun MoviePosterCard(
     movie: HomeMovie,
     modifier: Modifier = Modifier,
+    onClick: (() -> Unit)? = null,
 ) {
-    Column(modifier = modifier) {
+    Column(
+        modifier = if (onClick != null) modifier.clickable { onClick() } else modifier
+    ) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -56,7 +60,7 @@ fun MoviePosterCard(
                     .background(
                         Brush.verticalGradient(
                             0f to Color.Transparent,
-                            0.6f to Color(0x33000000),
+                            0.5f to Color(0x880D1A63),
                             1f to Color(0xCC0B0616),
                         )
                     )

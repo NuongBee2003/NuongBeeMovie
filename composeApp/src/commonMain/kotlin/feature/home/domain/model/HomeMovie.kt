@@ -3,6 +3,7 @@ package feature.home.domain.model
 data class HomeMovie(
     val id: String,
     val name: String,
+    val slug: String,
     val thumbUrl: String?,
     val year: Int?,
     val quality: String?,

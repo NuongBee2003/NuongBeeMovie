@@ -2,8 +2,10 @@ package feature.home.data
 
 import core.network.HttpClientProvider
 import feature.home.data.dto.HomeResponseDto
+import feature.search.data.dto.SearchResponseDto
 import io.ktor.client.call.body
 import io.ktor.client.request.get
+import io.ktor.client.request.parameter
 
 class KtorOphimApi(
     private val baseUrl: String = "https://ophim1.com",
@@ -20,5 +22,13 @@ class KtorOphimApi(
             .get("$baseUrl/v1/api/phim/$slug")
             .body()
     }
-}
 
+    override suspend fun search(keyword: String, page: Int): SearchResponseDto {
+        return HttpClientProvider.httpClient
+            .get("$baseUrl/v1/api/tim-kiem") {
+                parameter("keyword", keyword)
+                parameter("page", page)
+            }
+            .body()
+    }
+}

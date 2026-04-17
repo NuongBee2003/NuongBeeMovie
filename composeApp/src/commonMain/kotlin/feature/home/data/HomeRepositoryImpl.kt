@@ -20,6 +20,7 @@ class HomeRepositoryImpl(
             data?.items.orEmpty().mapNotNull { item ->
                 val id = item.id ?: return@mapNotNull null
                 val name = item.name ?: return@mapNotNull null
+                val slug = item.slug ?: return@mapNotNull null
 
                 val thumb = item.thumb_url
                 val fullThumbUrl = when {
@@ -36,6 +37,7 @@ class HomeRepositoryImpl(
                 HomeMovie(
                     id = id,
                     name = name,
+                    slug = slug,
                     thumbUrl = fullThumbUrl,
                     year = item.year,
                     quality = item.quality,

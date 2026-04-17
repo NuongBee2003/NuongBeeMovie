@@ -110,9 +110,17 @@ class AllMoviesScreen : Screen {
                             key = { pair -> pair.joinToString("-") { it.id } },
                         ) { pair ->
                             Row(horizontalArrangement = Arrangement.spacedBy(14.dp)) {
-                                MoviePosterCard(movie = pair[0], modifier = Modifier.weight(1f))
+                                MoviePosterCard(
+                                    movie = pair[0],
+                                    modifier = Modifier.weight(1f),
+                                    onClick = { navigator?.push(feature.detail.ui.MovieDetailScreen(pair[0].slug)) }
+                                )
                                 if (pair.size > 1) {
-                                    MoviePosterCard(movie = pair[1], modifier = Modifier.weight(1f))
+                                    MoviePosterCard(
+                                        movie = pair[1],
+                                        modifier = Modifier.weight(1f),
+                                        onClick = { navigator?.push(feature.detail.ui.MovieDetailScreen(pair[1].slug)) }
+                                    )
                                 } else {
                                     Spacer(modifier = Modifier.weight(1f))
                                 }

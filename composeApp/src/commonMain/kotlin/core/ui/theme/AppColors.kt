@@ -3,16 +3,15 @@ package core.ui.theme
 import androidx.compose.ui.graphics.Color
 
 object AppColors {
-    /** Brand tone from design: #1A0B2E */
-    val Brand = Color(0xFF1A0B2E)
+    val Background = Color(0xFF0B0B0D) // Nền đen sâu
 
-    // Supporting purples to match the screenshot vibe
-    val Surface = Color(0xFF24133D)
-    val SurfaceVariant = Color(0xFF2B1847)
+    val Brand = Color(0xFF0A0A0A) // Đen tuyền
 
-    val TextPrimary = Color(0xFFEDE7FF)
-    val TextSecondary = Color(0xFFB7A9D6)
-    val IconSelected = Color(0xFFE6DCFF)
-    val IconUnselected = Color(0xFF9B8AB8)
+    val Surface = Color(0xFF141414) // Xám đen (Nổi lên một chút so với Brand)
+    val SurfaceVariant = Color(0xFF292929) // Xám đậm hơn (Dùng cho vùng nhấn)
+
+    val TextPrimary = Color(0xFFFFFFFF) // Trắng tinh
+    val TextSecondary = Color(0xFFA3A3A3) // Xám nhạt
+    val IconSelected = Color(0xFFFFFFFF) // Trắng (Đồng bộ với TextPrimary)
+    val IconUnselected = Color(0xFF737373) // Xám tối
 }
-
